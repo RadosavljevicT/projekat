@@ -36,7 +36,7 @@ export class User {
     @Column({ nullable: true })
     imageUrl: string | undefined;
 
-    // @OneToMany(() => Post, p => p.user)
-    // posts: Post[]
+    @OneToMany(() => Post, p => p.user)
+    posts: Post[]
 
 }
