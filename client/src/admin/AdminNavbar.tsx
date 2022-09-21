@@ -8,17 +8,17 @@ interface Props {
   onLogout: () => void
 }
 
-export default function UserNavbar(props: Props) {
+export default function AdminNavbar(props: Props) {
   return (
     <Navbar>
       <Navbar.Brand >
         CATVERSE
       </Navbar.Brand>
       <Nav>
-        <Nav.Item as={NavLink} to='/'>Home</Nav.Item>
+        <Nav.Item as={NavLink} to='/'>Users</Nav.Item>
       </Nav>
       <Nav>
-        <Nav.Item as={NavLink} to='/user'>Search users</Nav.Item>
+        <Nav.Item as={NavLink} to='/statistics'>Statistics</Nav.Item>
       </Nav>
       <Nav pullRight>
         <Avatar size='lg' circle src={props.user.imageUrl} />

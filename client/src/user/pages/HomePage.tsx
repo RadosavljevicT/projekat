@@ -16,9 +16,9 @@ export default function HomePage() {
     )
   }
   return (
-    <div>
+    <div className='margin-bottom'>
       <CreatePost
-        animalsTypes={animalsTypes || []}
+        animalTypes={animalsTypes || []}
         open={openModal}
         onClose={() => setOpenModal(false)}
         onSubmit={async (post) => {
@@ -37,53 +37,55 @@ export default function HomePage() {
           Whats on your mind...
         </div>
       </div>
-      {
-        posts.map(post => {
-          return (
-            <PostCard
-              onDelete={async () => {
-                await axios.delete('/post/' + post.id);
-                setPosts(prev => (prev || []).filter(p => p !== post));
-              }
-              }
-              onRemoveComment={async id => {
-                await axios.delete(`/post/${post.id}/comment/` + id);
-                setPosts(prev => {
-                  if (!prev) {
-                    return [];
-                  }
-                  return prev.map(element => {
-                    if (element === post) {
-                      return {
-                        ...post,
-                        comments: (element.comments || []).filter(c => c.id !== id)
-                      }
+      <div >
+        {
+          posts.map(post => {
+            return (
+              <PostCard
+                onDelete={async () => {
+                  await axios.delete('/post/' + post.id);
+                  setPosts(prev => (prev || []).filter(p => p !== post));
+                }
+                }
+                onRemoveComment={async id => {
+                  await axios.delete(`/post/${post.id}/comment/` + id);
+                  setPosts(prev => {
+                    if (!prev) {
+                      return [];
                     }
-                    return element;
-                  })
-                })
-              }}
-              onComment={async text => {
-                const res = await axios.post(`/post/${post.id}/comment`, { content: text });
-                setPosts(prev => {
-                  if (!prev) {
-                    return [];
-                  }
-                  return prev.map(element => {
-                    if (element === post) {
-                      return {
-                        ...post,
-                        comments: !element.comments ? [res.data] : [...element.comments, res.data]
+                    return prev.map(element => {
+                      if (element === post) {
+                        return {
+                          ...post,
+                          comments: (element.comments || []).filter(c => c.id !== id)
+                        }
                       }
-                    }
-                    return element;
+                      return element;
+                    })
                   })
-                })
-              }}
-              key={post.id} post={post} />
-          )
-        })
-      }
+                }}
+                onComment={async text => {
+                  const res = await axios.post(`/post/${post.id}/comment`, { content: text });
+                  setPosts(prev => {
+                    if (!prev) {
+                      return [];
+                    }
+                    return prev.map(element => {
+                      if (element === post) {
+                        return {
+                          ...post,
+                          comments: !element.comments ? [res.data] : [...element.comments, res.data]
+                        }
+                      }
+                      return element;
+                    })
+                  })
+                }}
+                key={post.id} post={post} />
+            )
+          })
+        }
+      </div>
     </div>
   )
 }

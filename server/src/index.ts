@@ -25,6 +25,15 @@ appDataSource.initialize().then(async connection => {
         credentials: true,
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     }))
+    app.post('/upload', uplaodMiddleware, renameFile('img'), (req, res) => {
+        res.json({
+            fileUrl: (req as any).fileUrl
+        })
+    })
+    app.use('/img', express.static('img', {
+        extensions: ['png', 'jpg', 'jpeg']
+    }))
+
     app.use(session({
         secret: 'adsfdghsgearfsgrdthftehetrt',
         resave: false,
@@ -37,14 +46,6 @@ appDataSource.initialize().then(async connection => {
         }
     }))
 
-    app.post('/upload', uplaodMiddleware, renameFile('img'), (req, res) => {
-        res.json({
-            fileUrl: (req as any).fileUrl
-        })
-    })
-    app.use('/img', express.static('img', {
-        extensions: ['png', 'jpg', 'jpeg']
-    }))
     app.use('/auth', authRouter)
     app.use((request, response, next) => {
         const user = (request.session as any).user as User | undefined;

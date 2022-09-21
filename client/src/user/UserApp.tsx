@@ -14,7 +14,7 @@ interface Props {
 
 export default function UserApp(props: Props) {
   return (
-    <div >
+    <div className='all'>
       <BrowserRouter>
         <UserNavbar onLogout={props.onLogout} user={props.user} />
         <div className='container'>

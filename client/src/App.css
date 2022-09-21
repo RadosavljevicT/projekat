@@ -1,7 +1,12 @@
+.all{
+  display: flex;
+  flex-direction: column;
+}
+
 .container{
   background-color: #F0F3F9;
   padding: 0 15%;
-  height: 93vh;
+  flex: 1;
   font-size: 16px;
 }
 .fluid{
@@ -10,7 +15,7 @@
 
 .content{
   background-color: white;
-  padding: 20px 30px;
+  padding: 20px 30px 50px 30px;
   height: 100%;
 }
 .post-card{
@@ -116,4 +121,7 @@
   border-radius: 15px;
   font-weight: bold;
   color: #142041;
+}
+.margin-bottom{
+  margin-bottom: 30px;
 }
